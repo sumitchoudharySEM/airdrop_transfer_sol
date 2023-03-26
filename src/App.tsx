@@ -164,7 +164,7 @@ function App() {
         SystemProgram.transfer({
           fromPubkey: from.publicKey,
           toPubkey: toAccount,
-          lamports: LAMPORTS_PER_SOL / 10,
+          lamports: 2*LAMPORTS_PER_SOL,
         })
       );
       console.log("transfer complete");
