@@ -1,6 +1,8 @@
 // import functionalities
 import React from "react";
 import logo from "./logo.svg";
+import {Buffer} from "buffer";
+
 import "./App.css";
 import {
   PublicKey,
@@ -16,10 +18,11 @@ import {
 } from "@solana/web3.js";
 import { useEffect, useState } from "react";
 import { Console } from "console";
-const Buffer = require("buffer/").Buffer;
+//const Buffer = require("buffer/").Buffer;
 
 // create types
 type DisplayEncoding = "utf8" | "hex";
+window.Buffer = window.Buffer || Buffer;
 
 type PhantomEvent = "disconnect" | "connect" | "accountChanged";
 type PhantomRequestMethod =
@@ -32,6 +35,7 @@ type PhantomRequestMethod =
 interface ConnectOpts {
   onlyIfTrusted: boolean;
 }
+
 
 interface PhantomProvider {
   publicKey: PublicKey | null;
@@ -54,6 +58,7 @@ const getProvider = (): PhantomProvider | undefined => {
     if (provider.isPhantom) return provider as PhantomProvider;
   }
 };
+
 
 function App() {
   const [provider, setProvider] = useState<PhantomProvider | undefined>(
@@ -89,12 +94,12 @@ function App() {
     }
   };
 
-  const connection: Connection = new Connection(
-    clusterApiUrl("devnet"),
-    "confirmed"
-  );
-
   const createAirdrop = async () => {
+
+    const connection: Connection = new Connection(
+      clusterApiUrl("devnet"),
+      "confirmed"
+    );
     const from: Keypair = Keypair.generate();
     console.log("this is the from key");
     setfrom(from);
@@ -139,6 +144,11 @@ function App() {
   };
 
   const transferSOL = async () => {
+    const connection: Connection = new Connection(
+      clusterApiUrl("devnet"),
+      "confirmed"
+    );
+
     if (from !== undefined && to !== undefined) {
       // Send money from "from" wallet and into "to" wallet
       console.log("this is befour to key to key");
@@ -171,6 +181,7 @@ function App() {
       const totranwalletBalance: number = await connection.getBalance(
         toAccount
       );
+
       console.log(
         `from Wallet balance after transaction: ${
           parseInt(fromtranwalletBalance.toString()) / LAMPORTS_PER_SOL
