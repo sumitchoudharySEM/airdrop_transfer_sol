@@ -96,15 +96,26 @@ function App() {
   };
 
   const createAirdrop = async () => {
+    
+    if(from == undefined){
+      const from: Keypair = Keypair.generate();
+      console.log("this is the from key");
+      setfrom(from);
+      callFromAirDrop();
+    }
+    else{
+      callFromAirDrop();
+    }
+  };
+  
 
+  const callFromAirDrop = async () => {
     const connection: Connection = new Connection(
       clusterApiUrl("devnet"),
       "confirmed"
     );
-    const from: Keypair = Keypair.generate();
-    console.log("this is the from key");
-    setfrom(from);
-
+    if(from !== undefined){
+      console.log("this is from !== undefined");
     //checking balance before airdrop
     const frommwalletBalance: number = await connection.getBalance(
       new PublicKey(from.publicKey)
@@ -141,7 +152,7 @@ function App() {
       `from Wallet balance after airdrop: ${
         parseInt(frommafterairwalletBalance.toString()) / LAMPORTS_PER_SOL
       } SOL`
-    );
+    );}
   };
 
   const transferSOL = async () => {
