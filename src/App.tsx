@@ -52,6 +52,7 @@ interface PhantomProvider {
   request: (method: PhantomRequestMethod, params: any) => Promise<unknown>;
 }
 
+
 const getProvider = (): PhantomProvider | undefined => {
   if ("solana" in window) {
     const provider = window.solana as any;
@@ -220,6 +221,7 @@ function App() {
       </header>
       <button onClick={transferSOL}>transfer sol</button>
     </div>
+    
   );
 }
 
